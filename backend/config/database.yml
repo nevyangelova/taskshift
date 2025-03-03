@@ -1,0 +1,21 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: root
+  password: 
+  socket: /tmp/mysql.sock
+
+development:
+  <<: *default
+  database: taskshift_development
+
+test:
+  <<: *default
+  database: taskshift_test
+
+production:
+  <<: *default
+  database: taskshift_production
+  username: taskshift
+  password: <%= ENV['TASKSHIFT_DATABASE_PASSWORD'] %>
