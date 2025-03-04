@@ -15,3 +15,8 @@ export interface Task {
     name: string;
     project_id: string;
 }
+
+/**
+ * View type
+ */
+export type ViewType = 'list' | 'grid';
