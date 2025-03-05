@@ -1,21 +1,16 @@
 import React from 'react';
 import {Task} from '@/types';
+import VirtualizedTaskList from './VirtualizedTaskList';
 
 interface ListViewProps {
     tasks: Task[];
 }
 
 export default function ListView({tasks}: ListViewProps) {
-    if (!tasks.length) {
-        return (
-            <div className="text-center py-10">
-                <p className="text-gray-500 dark:text-gray-400">
-                    No tasks found
-                </p>
-            </div>
-        );
+    const useVirtualization = tasks.length > 20;
+    if (useVirtualization) {
+        return <VirtualizedTaskList tasks={tasks} />;
     }
-
     return (
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
             {tasks.map(task => (

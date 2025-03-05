@@ -7,6 +7,7 @@ import ListView from '@/components/ListView';
 import GridView from '@/components/GridView';
 import LoadingState from '@/components/LoadingState';
 import ErrorState from '@/components/ErrorState';
+import AnimatedViewTransition from '@/components/AnimatedViewTransition';
 
 export default function Home() {
     const {
@@ -61,16 +62,14 @@ export default function Home() {
                     ) : errorMessage ? (
                         <ErrorState message={errorMessage} />
                     ) : (
-                        <div
-                            className="mt-4"
-                            role="region"
-                            aria-labelledby="tasks-heading"
-                        >
-                            {viewType === 'list' ? (
-                                <ListView tasks={tasks} />
-                            ) : (
-                                <GridView tasks={tasks} />
-                            )}
+                        <div className="mt-4">
+                            <AnimatedViewTransition viewType={viewType}>
+                                {viewType === 'list' ? (
+                                    <ListView tasks={tasks} />
+                                ) : (
+                                    <GridView tasks={tasks} />
+                                )}
+                            </AnimatedViewTransition>
                         </div>
                     )}
                 </div>

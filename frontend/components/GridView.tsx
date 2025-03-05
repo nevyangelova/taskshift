@@ -6,16 +6,6 @@ interface GridViewProps {
 }
 
 export default function GridView({tasks}: GridViewProps) {
-    if (!tasks.length) {
-        return (
-            <div className="text-center py-10">
-                <p className="text-gray-500 dark:text-gray-400">
-                    No tasks found
-                </p>
-            </div>
-        );
-    }
-
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {tasks.map(task => (
