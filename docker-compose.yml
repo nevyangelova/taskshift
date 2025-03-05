@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+    frontend:
+        build: ./frontend
+        ports:
+            - '3000:3000'
+        volumes:
+            - ./frontend:/app
+            - /app/node_modules
+        environment:
+            - NEXT_PUBLIC_GRAPHQL_URL=http://localhost:8080/graphql
+        depends_on:
+            - backend
+
+    backend:
+        build:
+            context: ./backend
+        ports:
+            - '8080:8080'
+        volumes:
+            - ./backend:/app
+            - mysqld-socket:/var/run/mysqld
+        environment:
+            - RAILS_ENV=development
+        depends_on:
+            db:
+                condition: service_healthy
+        command: bash -c "bundle exec rails db:prepare && bundle exec rails server -b 0.0.0.0 -p 8080"
+
+    db:
+        image: mysql:8.0
+        container_name: taskshift-db
+        ports:
+            - '3306:3306'
+        environment:
+            - MYSQL_ALLOW_EMPTY_PASSWORD=true
+            - MYSQL_DATABASE=taskshift_development
+        volumes:
+            - mysql-data:/var/lib/mysql
+            - mysqld-socket:/var/run/mysqld
+        healthcheck:
+            test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+            interval: 5s
+            timeout: 5s
+            retries: 5
+
+volumes:
+    mysql-data:
+    mysqld-socket:
