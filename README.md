@@ -2,6 +2,9 @@
 
 TaskShift is a modern task management application built with Next.js, Apollo Client, GraphQL, and Ruby on Rails.
 
+![taskshift](https://github.com/user-attachments/assets/d5aef506-2c1c-40df-bdbb-cfe3d62cb828)
+
+
 ## Features
 
 - Project-based task organization
